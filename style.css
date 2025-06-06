@@ -1,124 +1,129 @@
+/* 🌌 Global Reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 body {
   font-family: 'Segoe UI', sans-serif;
-  background: linear-gradient(160deg, #0f0f0f, #1c1c1c);
-  color: #e0e0e0;
-  margin: 0;
-  padding: 20px;
+  background: linear-gradient(to bottom right, #0f0c29, #302b63, #24243e);
+  color: #fff;
   min-height: 100vh;
+  padding: 1rem;
 }
 
+/* 🔍 Header */
 header {
   text-align: center;
-  margin-bottom: 30px;
-  color: #f5f5f5;
-  font-size: 2rem;
-  letter-spacing: 1px;
-  text-shadow: 0 0 10px rgba(255,255,255,0.1);
+  margin-bottom: 1.5rem;
 }
 
-.filters {
+header h1 {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+}
+
+.filters, .search-bar {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 10px;
-  margin: 15px 0;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
 }
 
-input[type="text"],
-input[type="number"],
-select {
-  padding: 8px;
-  font-size: 14px;
-  background-color: #1e1e1e;
-  color: #e0e0e0;
-  border: 1px solid #333;
-  border-radius: 4px;
-  box-shadow: 0 0 5px 
-rgba(255,255,255,0.05);
-  transition: all 0.3s
-ease-in-out;
+input, select, button {
+  padding: 0.5rem;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+}
 
+input, select {
+  min-width: 150px;
 }
 
 button {
-  padding: 8px 12px;
-  font-size: 14px;
-  background-color: #bb86fc;
+  background: #ff4d4d;
   color: white;
-  border: none;
-  border-radius: 4px;
   cursor: pointer;
-  transition: 0.3s;
-  box-shadow: 0 0 5px #bb86fc66;
-
+  transition: background 0.2s;
 }
 
 button:hover {
-  background-color: #9b5de5;
-  transform: translateY(-2px);
+  background: #ff1a1a;
 }
 
+/* 🖼️ Hasil Anime */
 #results {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
   gap: 1rem;
-  margin-top: 1rem;
+  padding: 1rem;
 }
 
 .anime-card {
-  background-color: #1f1f1f;
+  background: rgba(0, 0, 0, 0.6);
   border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.3);
-  overflow: hidden;
-  text-align: center;
   padding: 10px;
-  transition: transform 0.2s;
-  opacity: 0;
-  transform: translateY(10px);
-  animation: fadeIn 0.4s forwards;
-}
-
-.anime-card:hover {
-  transform: scale(1.03);
+  text-align: center;
+  animation: fadeIn 0.5s ease forwards;
+  box-shadow: 0 0 10px rgba(255,255,255,0.1);
+  backdrop-filter: blur(4px);
 }
 
 .anime-card img {
   width: 100%;
   height: auto;
-  border-radius: 5px;
+  border-radius: 6px;
+  margin-bottom: 0.5rem;
 }
 
 .anime-card h3 {
   font-size: 1rem;
   margin: 0.5rem 0;
-  color: #ffffff;
 }
 
 .anime-card p {
-  margin: 0.2rem 0;
   font-size: 0.9rem;
-  color: #bbbbbb;
+  color: #ccc;
 }
 
 .anime-card a {
   display: inline-block;
-  margin-top: 5px;
-  padding: 4px 8px;
-  background-color: #03dac6;
-  color: black;
+  margin-top: 0.3rem;
   text-decoration: none;
-  border-radius: 4px;
-  font-size: 0.85rem;
+  color: #1ecbe1;
+  font-weight: bold;
 }
 
 .anime-card a:hover {
-  background-color: #00bfa5;
+  color: #ffffff;
 }
 
-/* Animasi Fade In */
+/* 🌟 Footer */
+footer {
+  text-align: center;
+  margin-top: 2rem;
+  font-size: 0.9rem;
+  color: #aaa;
+}
+
+/* 💫 Animation */
 @keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
   to {
     opacity: 1;
     transform: translateY(0);
+  }
+}
+
+/* 📱 Responsive */
+@media (max-width: 480px) {
+  input, select, button {
+    width: 100%;
   }
 }
