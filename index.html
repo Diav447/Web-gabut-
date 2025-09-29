@@ -2,22 +2,116 @@
 <html lang="id">
 <head>
   <meta charset="UTF-8">
-  <title>Cari Anime - Jikan API</title>
-  <link rel="stylesheet" href="style.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Anime Explorer</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #1a1a2e, #0f3460);
+      color: #fff;
+      margin: 0;
+      padding: 20px;
+      overflow-x: hidden;
+    }
+    h1 {
+      text-align: center;
+      color: #ff66cc;
+      text-shadow: 0 0 10px #ff66cc;
+    }
+    .search-bar {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
+    .search-bar input {
+      width: 70%;
+      padding: 10px;
+      border-radius: 10px;
+      border: none;
+      outline: none;
+      font-size: 16px;
+    }
+    .anime-list {
+      display: flex;
+      gap: 20px;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      padding-bottom: 15px;
+    }
+    .anime-card {
+      flex: 0 0 auto;
+      width: 180px;
+      background: rgba(0,0,0,0.6);
+      border-radius: 15px;
+      padding: 10px;
+      box-shadow: 0 0 15px rgba(255,102,204,0.5);
+      text-align: center;
+      scroll-snap-align: start;
+      transition: transform 0.2s;
+    }
+    .anime-card:hover {
+      transform: scale(1.05);
+    }
+    .anime-card img {
+      width: 100%;
+      border-radius: 10px;
+    }
+    .anime-card h3 {
+      font-size: 14px;
+      margin: 10px 0 5px;
+    }
+    .anime-card a {
+      display: inline-block;
+      margin-top: 5px;
+      padding: 5px 10px;
+      background: #00eaff;
+      color: #000;
+      border-radius: 8px;
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: bold;
+      transition: 0.2s;
+    }
+    .anime-card a:hover {
+      background: #ff66cc;
+      color: #fff;
+      box-shadow: 0 0 10px #ff66cc;
+    }
+  </style>
 </head>
 <body>
-  <header>
-    <h1>🔍 Cari Anime</h1>
-    <input type="text" id="searchInput" placeholder="Masukkan judul anime...">
-    <button onclick="searchAnime()">Cari</button>
-  </header>
+  <h1>🌸 Anime Explorer</h1>
+  <div class="search-bar">
+    <input type="text" id="searchInput" placeholder="Cari anime... (contoh: Naruto)">
+  </div>
+  <div class="anime-list" id="animeList"></div>
 
-  <main id="results"></main>
+  <script>
+    async function fetchAnime(query = "naruto") {
+      const res = await fetch(`https://api.jikan.moe/v4/anime?q=${query}&limit=10`);
+      const data = await res.json();
+      const list = document.getElementById("animeList");
+      list.innerHTML = "";
 
-  <footer>
-    <p>📡 Powered by Jikan API</p>
-  </footer>
+      data.data.forEach(anime => {
+        const card = document.createElement("div");
+        card.className = "anime-card";
+        card.innerHTML = `
+          <img src="${anime.images.jpg.image_url}" alt="${anime.title}">
+          <h3>${anime.title}</h3>
+          <a href="detail.html?id=${anime.mal_id}">Detail</a>
+        `;
+        list.appendChild(card);
+      });
+    }
 
-  <script src="script.js"></script>
+    document.getElementById("searchInput").addEventListener("keyup", (e) => {
+      if (e.key === "Enter") {
+        fetchAnime(e.target.value);
+      }
+    });
+
+    fetchAnime();
+  </script>
 </body>
 </html>

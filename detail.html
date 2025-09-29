@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Detail Anime</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #0f3460, #1a1a2e);
+      color: #fff;
+      margin: 0;
+      padding: 20px;
+    }
+    .container {
+      max-width: 800px;
+      margin: auto;
+      background: rgba(0,0,0,0.6);
+      padding: 20px;
+      border-radius: 15px;
+      box-shadow: 0 0 20px rgba(255,102,204,0.5);
+    }
+    img {
+      width: 200px;
+      border-radius: 10px;
+      float: left;
+      margin-right: 20px;
+    }
+    h1 {
+      color: #ff66cc;
+      text-shadow: 0 0 10px #ff66cc;
+    }
+    p {
+      line-height: 1.6;
+    }
+    a {
+      display: inline-block;
+      margin-top: 20px;
+      padding: 10px 15px;
+      background: #00eaff;
+      color: #000;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: bold;
+    }
+    a:hover {
+      background: #ff66cc;
+      color: #fff;
+    }
+  </style>
+</head>
+<body>
+  <div class="container" id="detailContainer">
+    <h1>Loading...</h1>
+  </div>
+
+  <script>
+    async function fetchDetail() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const id = urlParams.get("id");
+      if (!id) return;
+
+      const res = await fetch(`https://api.jikan.moe/v4/anime/${id}`);
+      const data = await res.json();
+      const anime = data.data;
+
+      const container = document.getElementById("detailContainer");
+      container.innerHTML = `
+        <img src="${anime.images.jpg.image_url}" alt="${anime.title}">
+        <h1>${anime.title}</h1>
+        <p><b>Episode:</b> ${anime.episodes || "?"}</p>
+        <p><b>Status:</b> ${anime.status}</p>
+        <p><b>Skor:</b> ${anime.score || "-"}</p>
+        <p>${anime.synopsis || "Tidak ada deskripsi."}</p>
+        <a href="index.html">⬅ Kembali</a>
+      `;
+    }
+
+    fetchDetail();
+  </script>
+</body>
+</html>
